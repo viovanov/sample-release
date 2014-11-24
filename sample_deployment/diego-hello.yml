@@ -1,0 +1,78 @@
+name: hello-diego
+director_uuid: cf8dc1fc-9c42-4ffc-96f1-fbad983a6ce6
+
+releases:
+- name: diego-hello
+  version: latest
+  
+resource_pools:
+- cloud_properties:
+    name: random
+  name: medium_z1
+  network: hello-diego
+  size: 1
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+
+compilation:
+  cloud_properties:
+    name: random
+  network: hello-diego
+  reuse_compilation_vms: true
+  workers: 1    
+    
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  max_in_flight: 10
+  serial: false
+  update_watch_time: 1000-60000
+  
+jobs:
+- instances: 1
+  name: hello_diego_z1
+  networks:
+  - name: hello-diego
+    static_ips: [10.244.30.2]
+  release: diego-hello
+  resource_pool: medium_z1
+  templates:
+  - name: hello_diego
+
+meta:
+  environment: garden
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+
+networks:
+- name: hello-diego
+  subnets:
+  - cloud_properties:
+     name: random
+    range: 10.244.30.0/30
+    reserved:
+    - 10.244.30.1
+    static:
+    - 10.244.30.2
+  - cloud_properties:    
+     name: random       
+    range: 10.244.30.4/30
+    reserved:            
+    - 10.244.30.5        
+
+properties:
+  domain: "10.244.0.34.xip.io"
+  diego:
+    hello:
+      address: "10.244.30.2"
+      port: 8080
+      hostname: "hellodiego"
+    auctioneer:
+      nats:
+        machines:
+        - 10.244.0.6
+        password: nats
+        port: 4222
+        username: nats
