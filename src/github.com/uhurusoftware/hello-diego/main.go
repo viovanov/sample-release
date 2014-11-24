@@ -73,7 +73,7 @@ func main() {
 		{"viewer-server", InitializeHTTPServer(logger, flowViewer)},
 	})
 
-	//RegisterWithRouter()
+	RegisterWithRouter()
 
 	monitor := ifrit.Envoke(sigmon.New(group))
 
