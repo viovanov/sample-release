@@ -1,0 +1,5 @@
+check process hello_diego
+  with pidfile /var/vcap/sys/run/hello_diego/pid
+  start program "/var/vcap/jobs/hello_diego/bin/ctl start"
+  stop program "/var/vcap/jobs/hello_diego/bin/ctl stop"
+  group vcap

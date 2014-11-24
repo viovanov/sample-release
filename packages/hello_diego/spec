@@ -1,0 +1,8 @@
+---
+name: hello_diego
+
+dependencies:
+  - golang
+
+files:
+  - github.com/**/*

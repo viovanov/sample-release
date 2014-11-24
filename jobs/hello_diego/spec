@@ -1,0 +1,19 @@
+---
+name: hello_diego
+templates:
+  ctl.erb: bin/ctl
+packages:
+  - hello_diego
+properties:
+  diego.hello.address:
+    description: "Intefarce + port for the hello server"
+    default: "0.0.0.0:8080"
+  diego.auctioneer.nats.username:
+    description: "Username for server authentication."
+  diego.auctioneer.nats.password:
+    description: "Password for server authentication."
+  diego.auctioneer.nats.port:
+    description: "The port for the NATS server to listen on."
+    default: 4222
+  diego.auctioneer.nats.machines:
+    description: "IP of each NATS cluster member."
