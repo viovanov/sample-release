@@ -5,6 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/apcera/nats"
 	"github.com/cloudfoundry-incubator/cf-lager"
@@ -101,7 +103,7 @@ func RegisterWithRouter() {
 	natsMembers := []yagnats.ConnectionProvider{}
 
 	for _, addr := range strings.Split(*natsAddresses, ",") {
-		log.Println("configuring nats server:", addr)
+		fmt.Println("configuring nats server:", addr)
 		natsMembers = append(natsMembers, &yagnats.ConnectionInfo{
 			Addr:     addr,
 			Username: *natsUsername,
@@ -117,7 +119,7 @@ func RegisterWithRouter() {
 			break
 		}
 
-		log.Println("failed to connect to NATS:", err)
+		fmt.Println("failed to connect to NATS:", err)
 		time.Sleep(1 * time.Second)
 	}
 
@@ -126,7 +128,7 @@ func RegisterWithRouter() {
 	client.Greet()
 
 	for _, route := range strings.Split(*routes, ",") {
-		client.Register(listenPort, route)
+		client.Register(*listenPort, route)
 	}
 }
 
@@ -136,7 +138,7 @@ func InitializeHTTPServer(logger lager.Logger, flowViewer chan (string)) ifrit.R
 	if err != nil {
 		panic("failed to initialize viewer server: " + err.Error())
 	}
-	return http_server.New(*(listenAddr + string(listenPort)), viewerHandler)
+	return http_server.New((*listenAddr)+string(*listenPort), viewerHandler)
 }
 
 func StopListening() error {
