@@ -6,3 +6,5 @@ dev_releases/
 .swp
 releases/**/*.tgz
 pkg/
+src/github.com/**
+!src/github.com/uhurusoftware
