@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -72,11 +73,11 @@ func main() {
 		{"viewer-server", InitializeHTTPServer(logger, flowViewer)},
 	})
 
+	//RegisterWithRouter()
+
 	monitor := ifrit.Envoke(sigmon.New(group))
 
 	ListenOnNATS(natsClient, flowViewer)
-
-	RegisterWithRouter()
 
 	<-monitor.Wait()
 
@@ -138,7 +139,8 @@ func InitializeHTTPServer(logger lager.Logger, flowViewer chan (string)) ifrit.R
 	if err != nil {
 		panic("failed to initialize viewer server: " + err.Error())
 	}
-	return http_server.New((*listenAddr)+string(*listenPort), viewerHandler)
+
+	return http_server.New((*listenAddr)+":"+strconv.Itoa(*listenPort), viewerHandler)
 }
 
 func StopListening() error {
