@@ -15,6 +15,7 @@ import (
 	"github.com/tedsuo/ifrit/http_server"
 	"github.com/tedsuo/ifrit/sigmon"
 	"github.com/uhurusoftware/hello-diego/viewer"
+        "github.com/cloudfoundry/gorouter"
 )
 
 var natsAddresses = flag.String(
@@ -37,8 +38,14 @@ var natsPassword = flag.String(
 
 var listenAddr = flag.String(
 	"listenAddr",
-	"0.0.0.0:8080",
-	"host:port to listen on for the HTTP viewer",
+	"0.0.0.0",
+	"host to listen on for the HTTP viewer",
+)
+
+var listenPort = flag.Int(
+        "listenPort",
+        8080,
+        "port to listen on for the HTTP viewer",
 )
 
 var subscription *nats.Subscription
