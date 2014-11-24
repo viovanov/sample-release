@@ -15,7 +15,6 @@ import (
 	"github.com/tedsuo/ifrit/http_server"
 	"github.com/tedsuo/ifrit/sigmon"
 	"github.com/uhurusoftware/hello-diego/viewer"
-        "github.com/cloudfoundry/gorouter"
 )
 
 var natsAddresses = flag.String(

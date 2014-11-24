@@ -1,0 +1,16 @@
+export GOPATH=${BUILD_DIR}
+
+
+cd ${BUILD_DIR}
+mkdir src
+mv github.com src/
+
+cd ${BUILD_DIR}/src/github.com/uhurusoftware/hello-diego
+
+go get
+
+rm -rf ${BUILD_DIR}/pkg
+rm -rf ${BUILD_DIR}/bin
+
+
+exit 0
