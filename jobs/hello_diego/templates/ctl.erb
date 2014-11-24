@@ -16,12 +16,14 @@ case $1 in
 
     exec /var/vcap/packages/hello_diego/bin/hello-diego \
       -natsAddresses <%= p("diego.auctioneer.nats.machines").collect { |addr| "#{addr}:#{p("diego.auctioneer.nats.port")}" }.join(",") %> \
-      -natsUsername=<%= p("diego.auctioneer.nats.username") %> \		
+      -natsUsername=<%= p("diego.auctioneer.nats.username") %> \
       -natsPassword=<%= p("diego.auctioneer.nats.password") %> \
       -listenAddr=<%= p("diego.hello.address") %> \
+      -listenPort=<%= p("diego.hello.port") %> \
+      -routes=<%= p("diego.hello.hostname") %>.<%= p("domain") %> \
       -logLevel="debug" \
-      >>  $LOG_DIR/web_ui.stdout.log \
-      2>> $LOG_DIR/web_ui.stderr.log
+      >>  $LOG_DIR/hello.stdout.log \
+      2>> $LOG_DIR/hello.stderr.log
 
     ;;
 

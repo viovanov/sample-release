@@ -6,8 +6,18 @@ packages:
   - hello_diego
 properties:
   diego.hello.address:
-    description: "Intefarce + port for the hello server"
-    default: "0.0.0.0:8080"
+    description: "Inteface for the hello server"
+    default: "0.0.0.0"
+  diego.hello.port:
+    description: "Port for the hello server"
+    default: "8080"
+  diego.hello.hostname:
+    description: "Hostname for router registration"
+    default: "hellodiego"
+  
+  domain:
+    description: "Cloud domain"
+
   diego.auctioneer.nats.username:
     description: "Username for server authentication."
   diego.auctioneer.nats.password:
